@@ -20,5 +20,11 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+
+    ofLight directionalLightGreen;
+    ofLight directionalLightPurple;
+
+    ofBoxPrimitive box;
+    ofMaterial material;
+    ofCamera cam;
 };

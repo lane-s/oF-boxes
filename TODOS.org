@@ -1,0 +1,22 @@
+* Boxes and Beams Initial Sketch
+** DONE Set up 3D grid and camera
+CLOSED: [2019-02-20 Wed 21:49]
+
+** TODO Create ExtendableBox node
+*** TODO Create a new ofNode (inherit from ofBox?)
+*** TODO Use FSM to keep track of box state?
+*** TODO Add method to expand a certain number of units in both directions along one axis
+**** TODO Add an extension scale parameter to allow a smaller extension to be made
+*** TODO Use linear interpolation with the box's scale to reach the target size
+*** TODO Add method to separate the expanded box into multiple extendable boxes
+*** TODO Add method to extend a beam from a box
+**** TODO Verify there is no beam in that direction already
+**** TODO If another box is in the way of the beam, the boxes become connected and the beam pushes the other box as it extends (unless the two boxes are connected)
+** TODO Write the control behavior 
+*** TODO Idea 1: go from a point, to a plane, to a cube, and then collapse the cube into a different plane
+*** TODO Idea 2: Create a tree like fractal that goes up and then out in all directions. Rotate each subtree at different speeds?
+*** TODO Idea 3: Particles shoot at the grid, destroy sections which are then regenerated
+** TODO Add some decoration 
+*** TODO Particle trails from moving boxes?
+*** TODO Color flowing through the beams
+*** TODO Cutting out shapes in the boxes and beams
