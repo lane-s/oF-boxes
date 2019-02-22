@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ExpandableBox.h"
 
 class ofApp : public ofBaseApp{
 
@@ -24,7 +25,7 @@ class ofApp : public ofBaseApp{
     ofLight directionalLightGreen;
     ofLight directionalLightPurple;
 
-    ofBoxPrimitive box;
+    ExpandableBox box;
     ofMaterial material;
     ofCamera cam;
 };

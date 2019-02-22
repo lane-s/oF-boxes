@@ -8,21 +8,22 @@ void ofApp::setup(){
   float width = ofGetWidth() * .12;
   float height = ofGetHeight() * .12;
 
-  box.set( width*1.25 );
+  box.setup();
+
+  float scale = 120;
+  box.getGeometry().setScale({scale, scale, scale});
 
   ofSetSmoothLighting(true);
+  directionalLightGreen.setup();
   directionalLightGreen.setDirectional();
   directionalLightGreen.setDiffuseColor( ofFloatColor(.2, .85, .2) );
-  directionalLightGreen.setSpecularColor( ofFloatColor(.3f, .9f, .3f) );
-  directionalLightGreen.setAmbientColor( ofFloatColor(0.f, 0.f, 1.f) );
+  directionalLightGreen.setAmbientColor( ofFloatColor(0.0f, 0.0f, 1.0f) );
 
+  directionalLightPurple.setup();
   directionalLightPurple.setDirectional();
   directionalLightPurple.setDiffuseColor( ofFloatColor(.55, .1, .75) );
   directionalLightPurple.setSpecularColor( ofFloatColor(.55f, .1f, .75f) );
   directionalLightPurple.setAmbientColor( ofFloatColor(0.f, 0.f, 1.f) );
-
-  material.setShininess( 120 );
-  material.setSpecularColor(ofColor(255, 255, 255, 255));
 }
 
 //--------------------------------------------------------------
@@ -40,30 +41,30 @@ void ofApp::draw(){
   float spinY = sin(ofGetElapsedTimef()*.4f) * 0.35f;
 
   ofEnableLighting();
+  // directionalLightPurple.enable();
   directionalLightGreen.enable();
-  directionalLightPurple.enable();
 
   cam.setGlobalPosition({ 0, 0, cam.getImagePlaneDistance(ofGetCurrentViewport()) });
   cam.begin();
+
   ofEnableDepthTest();
 
   float screenWidth = ofGetWidth();
   float screenHeight = ofGetHeight();
 
-  box.setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.1/6.f, 0);
-  box.rotateDeg(spinX, 1.0, 0.0, 0.0);
-  box.rotateDeg(spinY, 0.0, 1.0, 0.0);
+  box.getGeometry().setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.1/6.f, 0);
+  box.getGeometry().rotateDeg(spinX, 1.0, 0.0, 0.0);
+  box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
 
-  material.begin();
   box.draw();
-  material.end();
 
   ofDisableDepthTest();
   ofFill();
   cam.end();
 
   directionalLightGreen.disable();
-  directionalLightPurple.disable();
+  // directionalLightPurple.disable();
+
 }
 
 //--------------------------------------------------------------
