@@ -23,7 +23,7 @@ void ofApp::setup(){
   directionalLightPurple.setDirectional();
   directionalLightPurple.setDiffuseColor( ofFloatColor(.55, .1, .75) );
   directionalLightPurple.setSpecularColor( ofFloatColor(.55f, .1f, .75f) );
-  directionalLightPurple.setAmbientColor( ofFloatColor(0.f, 0.f, 1.f) );
+  directionalLightPurple.setAmbientColor( ofFloatColor(0.0f, 0.0f, 1.0f) );
 }
 
 //--------------------------------------------------------------
@@ -41,7 +41,7 @@ void ofApp::draw(){
   float spinY = sin(ofGetElapsedTimef()*.4f) * 0.35f;
 
   ofEnableLighting();
-  // directionalLightPurple.enable();
+  directionalLightPurple.enable();
   directionalLightGreen.enable();
 
   cam.setGlobalPosition({ 0, 0, cam.getImagePlaneDistance(ofGetCurrentViewport()) });
@@ -63,7 +63,7 @@ void ofApp::draw(){
   cam.end();
 
   directionalLightGreen.disable();
-  // directionalLightPurple.disable();
+  directionalLightPurple.disable();
 
 }
 
