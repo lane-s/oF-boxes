@@ -5,23 +5,33 @@
 class ExpandableBox{
  public:
   ExpandableBox();
-  void setup();
+  void setup(glm::vec3 initScale, int initUnits);
   void draw();
   void update();
-  void beginExpand(glm::vec3 dir, float length);
+  void beginExpand(glm::vec3 axis, int units);
 	ofBoxPrimitive& getGeometry();
  private:
-  ofBoxPrimitive geometry;
-  ofMaterial material;
+  ofBoxPrimitive mGeometry;
+  ofMaterial mMaterial;
 
-  ofNode forwardAnchor;
-  ofNode backwardAnchor;
-  ofNode leftAnchor;
-  ofNode rightAnchor;
-  ofNode upAnchor;
-  ofNode downAnchor;
+  ofNode mForwardAnchor;
+  ofNode mBackwardAnchor;
+  ofNode mLeftAnchor;
+  ofNode mRightAnchor;
+  ofNode mUpAnchor;
+  ofNode mDownAnchor;
+
+  glm::vec3 mBaseScale;
+  glm::vec3 mCurrentScale;
 
   bool bExpanding;
+  float mExpandTime;
+  float mExpandStartTime;
+
+  int mExpandUnits;
+  glm::vec3 mExpandInitScale;
+  glm::vec3 mExpandTargetScale;
 
   void subdivide();
+
 };

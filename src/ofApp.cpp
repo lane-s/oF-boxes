@@ -8,10 +8,8 @@ void ofApp::setup(){
   float width = ofGetWidth() * .12;
   float height = ofGetHeight() * .12;
 
-  box.setup();
-
-  float scale = 120;
-  box.getGeometry().setScale({scale, scale, scale});
+  box.setup(glm::vec3(120), 1);
+  box.beginExpand(glm::vec3(0, 1, 0), 3);
 
   ofSetSmoothLighting(true);
   directionalLightGreen.setup();
@@ -33,6 +31,8 @@ void ofApp::update(){
 
   glm::vec3 purpleLightDir = glm::vec3(-45, -45, 0);
   directionalLightPurple.setOrientation(glm::quat(purpleLightDir));
+
+  box.update();
 }
 
 //--------------------------------------------------------------
@@ -53,8 +53,8 @@ void ofApp::draw(){
   float screenHeight = ofGetHeight();
 
   box.getGeometry().setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.1/6.f, 0);
-  box.getGeometry().rotateDeg(spinX, 1.0, 0.0, 0.0);
-  box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
+  // box.getGeometry().rotateDeg(spinX, 1.0, 0.0, 0.0);
+  // box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
 
   box.draw();
 

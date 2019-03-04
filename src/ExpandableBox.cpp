@@ -1,66 +1,93 @@
 #include "ExpandableBox.h"
 
-ExpandableBox::ExpandableBox(){
-  bExpanding = false;
-  geometry.set(1);
+ExpandableBox::ExpandableBox()
+  : mBaseScale(glm::vec3(1)), mCurrentScale(glm::vec3(1)),
+    bExpanding(false), mExpandTime(1.0f) {
 }
 
-void ExpandableBox::setup(){
-  // material.setDiffuseColor(ofFloatColor::white);
-  material.setShininess( 120 );
-  material.setSpecularColor(ofColor(230, 230, 230, 230));
+void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1), int initUnits = 1) {
+  mBaseScale = baseScale;
+  mCurrentScale = baseScale * initUnits;
+  mGeometry.set(mCurrentScale.x, mCurrentScale.y, mCurrentScale.z);
+
+  // mMaterial.setDiffuseColor(ofFloatColor::white);
+  mMaterial.setShininess( 120 );
+  mMaterial.setSpecularColor(ofColor(230, 230, 230, 230));
 
   glm::vec3 anchorScale = glm::vec3(0.02f, 0.02f, 0.02f);
 
-  forwardAnchor.setParent(geometry);
-  forwardAnchor.setScale(anchorScale);
-  forwardAnchor.setPosition({0, 0, 0.5f});
-  forwardAnchor.lookAt(geometry.getLookAtDir());
+  mForwardAnchor.setParent(mGeometry);
+  mForwardAnchor.setScale(anchorScale);
+  mForwardAnchor.setPosition({0, 0, 0.5f});
+  mForwardAnchor.lookAt(mGeometry.getLookAtDir());
 
-  backwardAnchor.setParent(geometry);
-  backwardAnchor.setScale(anchorScale);
-  backwardAnchor.setPosition({0, 0, -0.5f});
-  backwardAnchor.lookAt(-geometry.getLookAtDir());
+  mBackwardAnchor.setParent(mGeometry);
+  mBackwardAnchor.setScale(anchorScale);
+  mBackwardAnchor.setPosition({0, 0, -0.5f});
+  mBackwardAnchor.lookAt(-mGeometry.getLookAtDir());
 
-  leftAnchor.setParent(geometry);
-  leftAnchor.setScale(anchorScale);
-  leftAnchor.setPosition({-0.5f, 0, 0});
-  leftAnchor.lookAt(geometry.getSideDir());
+  mLeftAnchor.setParent(mGeometry);
+  mLeftAnchor.setScale(anchorScale);
+  mLeftAnchor.setPosition({-0.5f, 0, 0});
+  mLeftAnchor.lookAt(mGeometry.getSideDir());
 
-  rightAnchor.setParent(geometry);
-  rightAnchor.setScale(anchorScale);
-  rightAnchor.setPosition({0.5f, 0, 0});
-  rightAnchor.lookAt(-geometry.getSideDir());
+  mRightAnchor.setParent(mGeometry);
+  mRightAnchor.setScale(anchorScale);
+  mRightAnchor.setPosition({0.5f, 0, 0});
+  mRightAnchor.lookAt(-mGeometry.getSideDir());
 
-  upAnchor.setParent(geometry);
-  upAnchor.setScale(anchorScale);
-  upAnchor.setPosition({0, 0.5f, 0});
-  upAnchor.lookAt(-geometry.getUpDir());
+  mUpAnchor.setParent(mGeometry);
+  mUpAnchor.setScale(anchorScale);
+  mUpAnchor.setPosition({0, 0.5f, 0});
+  mUpAnchor.lookAt(-mGeometry.getUpDir());
 
-  downAnchor.setParent(geometry);
-  downAnchor.setScale(anchorScale);
-  downAnchor.setPosition({0, -0.5f, 0});
-  downAnchor.lookAt(geometry.getUpDir());
+  mDownAnchor.setParent(mGeometry);
+  mDownAnchor.setScale(anchorScale);
+  mDownAnchor.setPosition({0, -0.5f, 0});
+  mDownAnchor.lookAt(mGeometry.getUpDir());
 }
 
 void ExpandableBox::draw(){
-    material.begin();
-    geometry.draw();
-    material.end();
+    mMaterial.begin();
+    mGeometry.draw();
+    mMaterial.end();
 
-    forwardAnchor.draw();
-    backwardAnchor.draw();
-    leftAnchor.draw();
-    rightAnchor.draw();
-    upAnchor.draw();
-    downAnchor.draw();
+    mForwardAnchor.draw();
+    mBackwardAnchor.draw();
+    mLeftAnchor.draw();
+    mRightAnchor.draw();
+    mUpAnchor.draw();
+    mDownAnchor.draw();
 }
 
 void ExpandableBox::update(){
+  mGeometry.set(mCurrentScale.x, mCurrentScale.y, mCurrentScale.z);
+
+  if (bExpanding) {
+    float elapsedTime = ofGetElapsedTimef() - mExpandStartTime;
+    if (elapsedTime >= mExpandTime) {
+      bExpanding = false;
+    }else {
+      mCurrentScale = glm::lerp(mExpandInitScale, mExpandTargetScale, elapsedTime / mExpandTime);
+    }
+  }
 }
 
-void ExpandableBox::beginExpand(glm::vec3 dir, float length){
-  // Expand length units in the given direction
+/*
+ * Expand to the scale of units * baseScale on the given axis over time
+ */
+void ExpandableBox::beginExpand(glm::vec3 axis, int units){
+  ofLog(OF_LOG_NOTICE) << "Beginning expansion" << endl;
+  bExpanding = true;
+  mExpandUnits = units;
+
+  mExpandInitScale = mCurrentScale;
+  glm::vec3 expandVec = glm::proj(mBaseScale, axis) * units;
+  mExpandTargetScale = mBaseScale - glm::proj(mBaseScale, axis) + expandVec;
+
+  ofLog(OF_LOG_NOTICE) << "Target scale:" << mExpandTargetScale << endl;
+
+  mExpandStartTime = ofGetElapsedTimef();
 }
 
 void ExpandableBox::subdivide(){
@@ -68,5 +95,5 @@ void ExpandableBox::subdivide(){
 }
 
 ofBoxPrimitive& ExpandableBox::getGeometry(){
-	return geometry;
+	return mGeometry;
 }

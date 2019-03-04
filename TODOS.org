@@ -3,15 +3,27 @@
 CLOSED: [2019-02-20 Wed 21:49]
 
 ** TODO Create ExtendableBox node
-*** TODO Create a new ofNode (inherit from ofBox?)
-*** TODO Use FSM to keep track of box state?
-*** TODO Add method to expand a certain number of units in both directions along one axis
-**** TODO Add an extension scale parameter to allow a smaller extension to be made
-*** TODO Use linear interpolation with the box's scale to reach the target size
-*** TODO Add method to separate the expanded box into multiple extendable boxes
-*** TODO Add method to extend a beam from a box
-**** TODO Verify there is no beam in that direction already
-**** TODO If another box is in the way of the beam, the boxes become connected and the beam pushes the other box as it extends (unless the two boxes are connected)
+*** DONE Create a new ofNode (inherit from ofBox?)
+CLOSED: [2019-02-21 Thu 21:57]
+*** DONE Add anchor points on each face of the box
+CLOSED: [2019-02-21 Thu 23:35]
+
+*** DONE Add method to expand a certain number of units along one axis
+CLOSED: [2019-03-04 Mon 16:53]
+*** DONE Use linear interpolation with the box's scale to reach the target size
+CLOSED: [2019-03-04 Mon 16:53]
+
+*** TODO Implement method to separate the expanded box into multiple extendable boxes
+**** TODO Create an ExtendableBoxPool
+***** TODO Create a unordered set to hold the extendable boxes in the pool
+***** TODO Initialize with a certain number of boxes in the set
+***** TODO Add a create method that returns a 
+***** TODO Learn how to make the Pool generic
+**** TODO Move and scale the original box on one side, create new boxes and move and scale them to each subdivision
+**** TODO Create a relatively smaller box in between each pair of larger boxes with no width. Parent a larger box to each end on the scaling axis
+**** TODO Recursively call the extend and split method on the new boxes
+**** TODO When the box has been alive for a certain amount of time, return it to the pool
+
 ** TODO Write the control behavior 
 *** TODO Idea 1: go from a point, to a plane, to a cube, and then collapse the cube into a different plane
 *** TODO Idea 2: Create a tree like fractal that goes up and then out in all directions. Rotate each subtree at different speeds?
