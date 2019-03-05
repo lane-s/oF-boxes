@@ -2,7 +2,7 @@
 
 ExpandableBox::ExpandableBox()
   : mBaseScale(glm::vec3(1)), mCurrentScale(glm::vec3(1)),
-    bExpanding(false), mExpandTime(1.0f) {
+    bExpanding(false), mExpandTime(1.75f) {
 }
 
 void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1), int initUnits = 1) {

@@ -52,9 +52,8 @@ void ofApp::draw(){
   float screenWidth = ofGetWidth();
   float screenHeight = ofGetHeight();
 
-  box.getGeometry().setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.1/6.f, 0);
-  // box.getGeometry().rotateDeg(spinX, 1.0, 0.0, 0.0);
-  // box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
+  box.getGeometry().setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.0/16.f, 0);
+  box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
 
   box.draw();
 
