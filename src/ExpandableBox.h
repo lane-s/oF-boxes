@@ -20,6 +20,7 @@ class ExpandableBox {
   void update();
   void beginExpand(glm::vec3 axis, int units);
 	ofBoxPrimitive& getGeometry();
+  void setPosition(float x, float y, float z);
 
  private:
   ExpandableBoxPool* mPool;
@@ -36,6 +37,7 @@ class ExpandableBox {
 
   glm::vec3 mBaseScale;
   glm::vec3 mCurrentScale;
+  glm::vec3 mPos;
 
   bool bExpanding;
   float mExpandTime;
@@ -45,6 +47,7 @@ class ExpandableBox {
   glm::vec3 mExpandInitScale;
   glm::vec3 mExpandTargetScale;
 
+  void defaultInit();
   void subdivide();
 
 };
@@ -77,10 +80,8 @@ struct ExpandableBoxActivator {
     float screenWidth = ofGetWidth();
     float screenHeight = ofGetHeight();
 
-    box->getGeometry()
-      .setPosition( -screenWidth * .5 + mOffsetX,
-                    screenHeight * 1.0/16.f, 0);
-
+    box->setPosition( -screenWidth * .5 + mOffsetX,
+                      screenHeight * 1.0/16.f, 0);
     mOffsetX += 15;
   }
 };

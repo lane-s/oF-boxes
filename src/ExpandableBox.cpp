@@ -1,13 +1,23 @@
 #include "ExpandableBox.h"
 
-ExpandableBox::ExpandableBox() {}
+ExpandableBox::ExpandableBox() {
+  defaultInit();
+}
 
 ExpandableBox::ExpandableBox(ExpandableBoxPool* pool)
-  : mPool(pool) {}
+  : mPool(pool) {
+  defaultInit();
+}
 
-void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1.0f), int initUnits = 1) {
+void ExpandableBox::defaultInit() {
+  mBaseScale = glm::vec3(1.0f);
+  mCurrentScale = glm::vec3(1.0f);
   bExpanding = false;
   mExpandTime = 1.75f;
+}
+
+void ExpandableBox::setup(glm::vec3 baseScale, int initUnits) {
+  bExpanding = false;
 
   mBaseScale = baseScale;
   mCurrentScale = baseScale * initUnits;
@@ -52,6 +62,8 @@ void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1.0f), int initUnits =
 
 void ExpandableBox::draw(){
     mMaterial.begin();
+    mGeometry.setPosition(mPos.x, mPos.y, mPos.z);
+    // ofLog(OF_LOG_NOTICE) << "Drawing a box" << endl;
     mGeometry.draw();
     mMaterial.end();
 
@@ -96,4 +108,8 @@ void ExpandableBox::subdivide(){
 
 ofBoxPrimitive& ExpandableBox::getGeometry(){
 	return mGeometry;
+}
+
+void ExpandableBox::setPosition(float x, float y, float z) {
+  mPos = glm::vec3(x, y, z);
 }

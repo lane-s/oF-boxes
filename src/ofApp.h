@@ -36,6 +36,9 @@ class ofApp : public ofBaseApp{
 
     std::vector<ExpandableBox*> mActiveBoxes;
     std::vector<ExpandableBoxPool::ptr> topLevelBoxes;
+
+    ExpandableBox* mSanityBox;
+
     float mNewBoxInterval;
     float mLastNewBox;
     void makeNewBox();

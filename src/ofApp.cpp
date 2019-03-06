@@ -8,11 +8,17 @@ void ofApp::setup(){
   mBoxInitializer.init(&mBoxPool);
   mBoxPool.init(50);
 
-  mNewBoxInterval = 0.5f;
+  mNewBoxInterval = 0.15f; //0.5 looks cool to
   makeNewBox();
 
-  float width = ofGetWidth() * .12;
-  float height = ofGetHeight() * .12;
+  mSanityBox = new ExpandableBox(&mBoxPool);
+  mSanityBox->setup(glm::vec3(120.0f), 1);
+  mSanityBox->beginExpand(glm::vec3(1.0f, 0.0f, 0.0f), 4);
+
+  float width = ofGetWidth();
+  float height = ofGetHeight();
+
+  mSanityBox->getGeometry().setPosition(width * 0.5, height * 0.5, 0);
 
   ofSetSmoothLighting(true);
   directionalLightGreen.setup();
@@ -51,6 +57,8 @@ void ofApp::update(){
   for (ExpandableBox* box : mActiveBoxes) {
     box->update();
   }
+
+  mSanityBox->update();
 }
 
 //--------------------------------------------------------------
@@ -68,10 +76,11 @@ void ofApp::draw(){
   ofEnableDepthTest();
 
   for (ExpandableBox* box : mActiveBoxes) {
-    ofLog(OF_LOG_NOTICE) << "Drawin a box" << endl;
     box->getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
     box->draw();
   }
+
+  // mSanityBox->draw();
 
   ofDisableDepthTest();
   ofFill();
