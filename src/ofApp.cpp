@@ -5,11 +5,14 @@ void ofApp::setup(){
   ofSetVerticalSync(true);
   ofBackground(20);
 
+  mBoxInitializer.init(&mBoxPool);
+  mBoxPool.init(50);
+
+  mNewBoxInterval = 0.5f;
+  makeNewBox();
+
   float width = ofGetWidth() * .12;
   float height = ofGetHeight() * .12;
-
-  box.setup(glm::vec3(120), 1);
-  box.beginExpand(glm::vec3(0, 1, 0), 3);
 
   ofSetSmoothLighting(true);
   directionalLightGreen.setup();
@@ -24,15 +27,30 @@ void ofApp::setup(){
   directionalLightPurple.setAmbientColor( ofFloatColor(0.0f, 0.0f, 1.0f) );
 }
 
+void ofApp::makeNewBox() {
+  ExpandableBoxPool::ptr newBox = mBoxPool.acquire();
+  if (newBox) {
+    topLevelBoxes.push_back(std::move(newBox));
+    mLastNewBox = ofGetElapsedTimef();
+  }
+}
+
 //--------------------------------------------------------------
 void ofApp::update(){
+  if (ofGetElapsedTimef() - mLastNewBox > mNewBoxInterval) {
+    makeNewBox();
+  }
+
   glm::vec3 greenLightDir = glm::vec3(45, 45, 0);
   directionalLightGreen.setOrientation(glm::quat(greenLightDir));
 
   glm::vec3 purpleLightDir = glm::vec3(-45, -45, 0);
   directionalLightPurple.setOrientation(glm::quat(purpleLightDir));
 
-  box.update();
+  mBoxPool.getActiveObjects(mActiveBoxes);
+  for (ExpandableBox* box : mActiveBoxes) {
+    box->update();
+  }
 }
 
 //--------------------------------------------------------------
@@ -49,13 +67,11 @@ void ofApp::draw(){
 
   ofEnableDepthTest();
 
-  float screenWidth = ofGetWidth();
-  float screenHeight = ofGetHeight();
-
-  box.getGeometry().setPosition( -screenWidth * .5 + screenWidth * 2/4.f, screenHeight * 1.0/16.f, 0);
-  box.getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
-
-  box.draw();
+  for (ExpandableBox* box : mActiveBoxes) {
+    ofLog(OF_LOG_NOTICE) << "Drawin a box" << endl;
+    box->getGeometry().rotateDeg(spinY, 0.0, 1.0, 0.0);
+    box->draw();
+  }
 
   ofDisableDepthTest();
   ofFill();
@@ -63,7 +79,6 @@ void ofApp::draw(){
 
   directionalLightGreen.disable();
   directionalLightPurple.disable();
-
 }
 
 //--------------------------------------------------------------

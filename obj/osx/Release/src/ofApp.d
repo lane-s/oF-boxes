@@ -821,7 +821,9 @@ obj/osx/Release/src/ofApp.o: \
   /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/video/ofAVFoundationVideoPlayer.h \
   /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/of3dUtils.h \
   /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/ofCamera.h \
-  /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/ofEasyCam.h
+  /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/ofEasyCam.h \
+  /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/apps/myApps/BoxesAndBeams/src/ObjectPool.cpp \
+  /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/apps/myApps/BoxesAndBeams/src/ExpandableBox.h
 
 /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/apps/myApps/BoxesAndBeams/src/ofApp.h:
 
@@ -2466,3 +2468,7 @@ obj/osx/Release/src/ofApp.o: \
 /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/ofCamera.h:
 
 /Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/libs/openFrameworks/3d/ofEasyCam.h:
+
+/Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/apps/myApps/BoxesAndBeams/src/ObjectPool.cpp:
+
+/Users/lspangler/Documents/Lane/Dev/GameDev/openFrameworks/apps/myApps/BoxesAndBeams/src/ExpandableBox.h:

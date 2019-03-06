@@ -1,11 +1,14 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ObjectPool.cpp"
 #include "ExpandableBox.h"
 
 class ofApp : public ofBaseApp{
-
 	public:
+    ofApp()
+      : mBoxPool(100, &mBoxInitializer), mActiveBoxes(50, nullptr) {}
+
 		void setup();
 		void update();
 		void draw();
@@ -25,7 +28,16 @@ class ofApp : public ofBaseApp{
     ofLight directionalLightGreen;
     ofLight directionalLightPurple;
 
-    ExpandableBox box;
     ofMaterial material;
     ofCamera cam;
+
+    ExpandableBoxInitializer mBoxInitializer;
+    ExpandableBoxPool mBoxPool;
+
+    std::vector<ExpandableBox*> mActiveBoxes;
+    std::vector<ExpandableBoxPool::ptr> topLevelBoxes;
+    float mNewBoxInterval;
+    float mLastNewBox;
+    void makeNewBox();
 };
+

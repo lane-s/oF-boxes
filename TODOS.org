@@ -13,16 +13,32 @@ CLOSED: [2019-03-04 Mon 16:53]
 *** DONE Use linear interpolation with the box's scale to reach the target size
 CLOSED: [2019-03-04 Mon 16:53]
 
+
 *** TODO Implement method to separate the expanded box into multiple extendable boxes
-**** TODO Create an ExtendableBoxPool
-***** TODO Create a unordered set to hold the extendable boxes in the pool
-***** TODO Initialize with a certain number of boxes in the set
-***** TODO Add a create method that returns a 
-***** TODO Learn how to make the Pool generic
-**** TODO Move and scale the original box on one side, create new boxes and move and scale them to each subdivision
-**** TODO Create a relatively smaller box in between each pair of larger boxes with no width. Parent a larger box to each end on the scaling axis
-**** TODO Recursively call the extend and split method on the new boxes
-**** TODO When the box has been alive for a certain amount of time, return it to the pool
+**** DONE Create an ExtendableBoxPool
+CLOSED: [2019-03-05 Tue 20:31]
+**** TODO Write the subdivision algorithm
+***** TODO Grab n - 1 boxes from the pool, add geom to vector with original box
+***** TODO Determine the position and scale of each new box
+Let x be the scaling axis
+Let S_x be the scale the box being subdivided
+Let s_x be the scale of each new box
+[s_x / 2 - p_x - s_x / 2][s_x / 2 - p_x - s_x / 2]
+[        S_x / 2      P_x       S_x / 2      ]
+
+Let n be the number of subdivisions
+s_x = S_x / n
+
+p_c = P_x - S_x / 2 + s_x / 2
+for b_i with i from 0 to n
+  b_i -> s_x = s_x
+  b_i -> p_x = p_c
+  p_c += s_x
+  
+*** TODO Add ColorGenerator
+**** TODO Create a color generator that cycles through different colors based on color theory
+**** TODO Pass color generator into initial box to pass down to children
+
 
 ** TODO Write the control behavior 
 *** TODO Idea 1: go from a point, to a plane, to a cube, and then collapse the cube into a different plane

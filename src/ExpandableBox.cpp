@@ -1,11 +1,14 @@
 #include "ExpandableBox.h"
 
-ExpandableBox::ExpandableBox()
-  : mBaseScale(glm::vec3(1)), mCurrentScale(glm::vec3(1)),
-    bExpanding(false), mExpandTime(1.75f) {
-}
+ExpandableBox::ExpandableBox() {}
 
-void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1), int initUnits = 1) {
+ExpandableBox::ExpandableBox(ExpandableBoxPool* pool)
+  : mPool(pool) {}
+
+void ExpandableBox::setup(glm::vec3 baseScale = glm::vec3(1.0f), int initUnits = 1) {
+  bExpanding = false;
+  mExpandTime = 1.75f;
+
   mBaseScale = baseScale;
   mCurrentScale = baseScale * initUnits;
   mGeometry.set(mCurrentScale.x, mCurrentScale.y, mCurrentScale.z);
@@ -77,15 +80,12 @@ void ExpandableBox::update(){
  * Expand to the scale of units * baseScale on the given axis over time
  */
 void ExpandableBox::beginExpand(glm::vec3 axis, int units){
-  ofLog(OF_LOG_NOTICE) << "Beginning expansion" << endl;
   bExpanding = true;
   mExpandUnits = units;
 
   mExpandInitScale = mCurrentScale;
   glm::vec3 expandVec = glm::proj(mBaseScale, axis) * units;
   mExpandTargetScale = mBaseScale - glm::proj(mBaseScale, axis) + expandVec;
-
-  ofLog(OF_LOG_NOTICE) << "Target scale:" << mExpandTargetScale << endl;
 
   mExpandStartTime = ofGetElapsedTimef();
 }
