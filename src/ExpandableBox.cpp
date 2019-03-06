@@ -63,7 +63,6 @@ void ExpandableBox::setup(glm::vec3 baseScale, int initUnits) {
 void ExpandableBox::draw(){
     mMaterial.begin();
     mGeometry.setPosition(mPos.x, mPos.y, mPos.z);
-    // ofLog(OF_LOG_NOTICE) << "Drawing a box" << endl;
     mGeometry.draw();
     mMaterial.end();
 

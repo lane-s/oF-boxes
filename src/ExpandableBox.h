@@ -70,7 +70,7 @@ struct ExpandableBoxInitializer {
 };
 
 struct ExpandableBoxActivator {
-  float mOffsetX;
+  float mOffsetX = 0;
 
   ExpandableBoxActivator() {}
   void operator () (ExpandableBox* box) {
